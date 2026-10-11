@@ -1,0 +1,63 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+[package]
+name = "typomend"
+description = "Fixes typos after your input method commits them, in any Windows app."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+# Typomend runs only on Windows. On other targets the crate builds a stub
+# that says so, which needs none of these.
+[target.'cfg(windows)'.dependencies]
+anyhow.workspace = true
+dirs.workspace = true
+i18n-embed.workspace = true
+i18n-embed-fl.workspace = true
+parking_lot.workspace = true
+rust-embed.workspace = true
+serde.workspace = true
+sys-locale.workspace = true
+toml.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+tray-icon.workspace = true
+typomend-engine.workspace = true
+typomend-observer.workspace = true
+typomend-scorer.workspace = true
+unic-langid.workspace = true
+
+# The Win32 API areas the program calls, one feature per module of the
+# windows crate. Add a feature here when code starts using a new module.
+[target.'cfg(windows)'.dependencies.windows]
+workspace = true
+features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Gdi",
+    "Win32_System_LibraryLoader",
+    "Win32_Storage_FileSystem",
+    "Win32_System_Com",
+    "Win32_System_Performance",
+    "Win32_System_ProcessStatus",
+    "Win32_System_Registry",
+    "Win32_System_SystemInformation",
+    "Win32_System_Threading",
+    "Win32_UI_Controls",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_UI_Shell",
+    "Win32_UI_WindowsAndMessaging",
+]
+
+# Compiles the resource script that holds the icons, manifest and dialogs.
+[build-dependencies]
+embed-resource.workspace = true
+
+[lints]
+workspace = true

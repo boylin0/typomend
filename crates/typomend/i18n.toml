@@ -1,0 +1,11 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# Read at compile time by the fl! macro of i18n-embed-fl, which rejects a
+# message id that the fallback language does not define. Other languages may
+# omit messages, which then fall back to this one.
+fallback_language = "en"
+
+[fluent]
+assets_dir = "i18n"

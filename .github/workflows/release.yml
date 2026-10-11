@@ -1,0 +1,77 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions: {}
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  release:
+    name: Build and publish typomend.exe
+    runs-on: windows-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@e2a55d2ffb04f378e9626c28d38b36d230d1e12f # master
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+
+      # The About page and the file properties show the crate version, so a
+      # tag that disagrees with Cargo.toml would ship a mislabeled build.
+      - name: Check the tag against the crate version
+        shell: bash
+        run: |
+          version=$(cargo pkgid --package typomend | sed 's/.*[#@]//')
+          if [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match version $version in Cargo.toml"
+            exit 1
+          fi
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+
+      # The release notes are this version's section of CHANGELOG.md, without
+      # the link definitions at the end of the file.
+      - name: Extract the release notes
+        shell: bash
+        run: |
+          awk -v heading="## [$VERSION]" '
+            /^## \[/ { if (found) exit; found = index($0, heading) == 1; next }
+            /^\[[^]]*\]: / { next }
+            found
+          ' CHANGELOG.md > notes.md
+          if [ ! -s notes.md ]; then
+            echo "::error::CHANGELOG.md has no section for $VERSION"
+            exit 1
+          fi
+
+      - run: cargo build --release --locked --package typomend
+
+      - name: Write the checksum
+        shell: bash
+        working-directory: target/release
+        run: sha256sum typomend.exe > typomend.exe.sha256
+
+      - name: Publish the release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            target/release/typomend.exe target/release/typomend.exe.sha256 \
+            --verify-tag --title "$GITHUB_REF_NAME" --notes-file notes.md

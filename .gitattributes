@@ -1,0 +1,5 @@
+# Check out text files with LF endings on every platform, which is what
+# rustfmt's newline_style = "Unix" expects.
+* text=auto eol=lf
+# PowerShell scripts keep the CRLF endings of Windows tooling.
+*.ps1 text eol=crlf

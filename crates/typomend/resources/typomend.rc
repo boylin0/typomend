@@ -1,0 +1,209 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+// Icons, version information and the dialog templates for the settings
+// window, one property page each.
+//
+// Every caption and label is empty here and filled in at run time from the
+// Fluent translations, so this file stays ASCII and language neutral.
+// build.rs defines VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH and
+// VERSION_STR from the crate version.
+
+#include <windows.h>
+#include <commctrl.h>
+#include "resource.h"
+
+// Common controls version 6, per-monitor DPI awareness and the supported OS.
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "typomend.manifest"
+
+// The application icon and the four tray icons, which differ in ink color for
+// light and dark taskbars and in the paused look.
+IDI_APP                 ICON "typomend.ico"
+IDI_TRAY_INK            ICON "tray-ink.ico"
+IDI_TRAY_INK_PAUSED     ICON "tray-ink-paused.ico"
+IDI_TRAY_WHITE          ICON "tray-white.ico"
+IDI_TRAY_WHITE_PAUSED   ICON "tray-white-paused.ico"
+
+// Shown in File Explorer's properties and as the process name in Task
+// Manager.
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, 0
+PRODUCTVERSION  VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, 0
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        // U.S. English, Unicode.
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName",      "Typomend contributors"
+            VALUE "FileDescription",  "Typomend"
+            VALUE "FileVersion",      VERSION_STR
+            VALUE "InternalName",     "typomend"
+            VALUE "LegalCopyright",   "Licensed under MPL-2.0"
+            VALUE "OriginalFilename", "typomend.exe"
+            VALUE "ProductName",      "Typomend"
+            VALUE "ProductVersion",   VERSION_STR
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 1200
+    END
+END
+
+// Shared styles. A page is a child dialog with a caption. The spin and list
+// styles are used by several pages.
+#define PAGE_STYLE DS_SHELLFONT | DS_CONTROL | WS_CHILD | WS_DISABLED | WS_CAPTION
+#define SPIN_STYLE UDS_AUTOBUDDY | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_ARROWKEYS | UDS_NOTHOUSANDS
+#define LIST_STYLE LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SINGLESEL | WS_BORDER | WS_TABSTOP
+
+// The pages of the settings window. Sizes are in dialog units.
+IDD_OVERVIEW DIALOGEX 0, 0, 280, 190
+STYLE PAGE_STYLE
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    AUTOCHECKBOX    "", IDC_ENABLED, 7, 7, 266, 12, WS_TABSTOP
+    LTEXT           "", IDC_STATUS, 19, 21, 254, 10
+    LTEXT           "", IDC_FOCUS_LABEL, 7, 44, 266, 10
+    LTEXT           "", IDC_FOCUS, 7, 56, 266, 10, SS_ENDELLIPSIS
+    LTEXT           "", IDC_COUNT, 7, 78, 266, 10
+END
+
+IDD_RULES DIALOGEX 0, 0, 280, 190
+STYLE PAGE_STYLE
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    LTEXT           "", IDC_ENGINE_LABEL, 7, 7, 266, 10
+    AUTORADIOBUTTON "", IDC_ENGINE_RULES, 15, 19, 258, 11, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "", IDC_ENGINE_MLM, 15, 31, 258, 11
+    LTEXT           "", IDC_RULES_FILE, 7, 49, 266, 10, SS_PATHELLIPSIS | SS_NOPREFIX
+    LTEXT           "", IDC_RULES_STATUS, 7, 61, 266, 18, SS_NOPREFIX
+    CONTROL         "", IDC_RULES, "SysListView32", LIST_STYLE | LVS_OWNERDATA, 7, 81, 266, 87
+    PUSHBUTTON      "", IDC_EDIT_RULES, 7, 172, 100, 14, WS_GROUP
+    PUSHBUTTON      "", IDC_OPEN_RULES_FOLDER, 111, 172, 100, 14
+END
+
+IDD_APPS DIALOGEX 0, 0, 280, 190
+STYLE PAGE_STYLE
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    LTEXT           "", IDC_APPS_INTRO, 7, 7, 266, 18
+    CONTROL         "", IDC_APPS, "SysListView32", LIST_STYLE, 7, 28, 266, 104
+    LTEXT           "", IDC_APP_MODE_LABEL, 7, 140, 90, 10
+    COMBOBOX        IDC_APP_MODE, 100, 138, 173, 90, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "", IDC_APP_MODE_HINT, 7, 156, 266, 28
+END
+
+IDD_HISTORY DIALOGEX 0, 0, 280, 190
+STYLE PAGE_STYLE
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    LTEXT           "", IDC_HISTORY_INTRO, 7, 7, 266, 18
+    CONTROL         "", IDC_HISTORY, "SysListView32", LIST_STYLE, 7, 28, 266, 136
+    LTEXT           "", IDC_HISTORY_EMPTY, 7, 171, 200, 10
+    PUSHBUTTON      "", IDC_CLEAR, 216, 168, 57, 14
+END
+
+IDD_SETTINGS DIALOGEX 0, 0, 280, 190
+STYLE PAGE_STYLE
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    LTEXT           "", IDC_LANGUAGE_LABEL, 7, 9, 120, 10
+    COMBOBOX        IDC_LANGUAGE, 153, 7, 120, 80, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    AUTOCHECKBOX    "", IDC_AUTOSTART, 7, 26, 266, 12, WS_TABSTOP
+    AUTOCHECKBOX    "", IDC_PRIVATE, 7, 40, 266, 12, WS_TABSTOP
+    LTEXT           "", IDC_PRIVATE_HINT, 19, 53, 254, 10
+    LTEXT           "", IDC_IDLE_LABEL, 7, 70, 190, 10
+    EDITTEXT        IDC_IDLE, 213, 68, 60, 14, ES_NUMBER
+    CONTROL         "", IDC_IDLE_SPIN, "msctls_updown32", SPIN_STYLE, 0, 0, 0, 0
+    LTEXT           "", IDC_IDLE_HINT, 7, 84, 266, 18
+    LTEXT           "", IDC_CARET_LABEL, 7, 106, 190, 10
+    EDITTEXT        IDC_CARET, 213, 104, 60, 14, ES_NUMBER
+    CONTROL         "", IDC_CARET_SPIN, "msctls_updown32", SPIN_STYLE, 0, 0, 0, 0
+    AUTOCHECKBOX    "", IDC_BLIND, 7, 124, 266, 12, WS_TABSTOP
+    LTEXT           "", IDC_BLIND_HINT, 19, 137, 254, 18
+    PUSHBUTTON      "", IDC_OPEN_LOGS, 7, 168, 110, 14
+    PUSHBUTTON      "", IDC_DELETE_LOGS, 121, 168, 110, 14
+END
+
+IDD_MODEL DIALOGEX 0, 0, 280, 208
+STYLE PAGE_STYLE
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    LTEXT           "", IDC_LM_INTRO, 7, 7, 266, 18
+    LTEXT           "", IDC_LM_MODEL_LABEL, 7, 32, 60, 10
+    COMBOBOX        IDC_LM_MODEL, 70, 30, 203, 120, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "", IDC_LM_MODE_LABEL, 7, 50, 60, 10
+    COMBOBOX        IDC_LM_MODE, 70, 48, 203, 60, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "", IDC_LM_EXPECTED, 7, 64, 266, 36, SS_NOPREFIX
+    LTEXT           "", IDC_LM_STATUS, 7, 102, 266, 18, SS_NOPREFIX
+    PUSHBUTTON      "", IDC_LM_DOWNLOAD, 7, 122, 86, 14, WS_GROUP
+    PUSHBUTTON      "", IDC_LM_DELETE, 97, 122, 86, 14
+    PUSHBUTTON      "", IDC_LM_TRY, 7, 140, 86, 14
+    PUSHBUTTON      "", IDC_LM_BENCH, 97, 140, 86, 14
+    LTEXT           "", IDC_LM_DIR, 7, 158, 266, 10, SS_PATHELLIPSIS | SS_NOPREFIX
+    PUSHBUTTON      "", IDC_LM_CHANGE_DIR, 7, 170, 86, 14
+    PUSHBUTTON      "", IDC_OPEN_MODELS_FOLDER, 97, 170, 86, 14
+    LTEXT           "", IDC_LM_NOTE, 7, 188, 266, 18
+END
+
+// The Try window, opened from the Language model page. The Check button is
+// the default one, so Enter in the text box runs the check.
+IDD_TRY DIALOGEX 0, 0, 280, 200
+STYLE DS_SHELLFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
+EXSTYLE WS_EX_APPWINDOW
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    LTEXT           "", IDC_TRY_INTRO, 7, 7, 266, 18
+    EDITTEXT        IDC_TRY_TEXT, 7, 28, 208, 14, ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "", IDC_TRY_RUN, 219, 28, 54, 14
+    LTEXT           "", IDC_TRY_RESULT, 7, 46, 266, 36, SS_NOPREFIX
+    CONTROL         "", IDC_TRY_LIST, "SysListView32", LIST_STYLE, 7, 84, 266, 109
+END
+
+// The accuracy benchmark window, opened from the Language model page.
+IDD_BENCH DIALOGEX 0, 0, 280, 200
+STYLE DS_SHELLFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
+EXSTYLE WS_EX_APPWINDOW
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    LTEXT           "", IDC_BENCH_INTRO, 7, 7, 266, 36
+    LTEXT           "", IDC_BENCH_MODEL, 7, 47, 266, 10, SS_NOPREFIX | SS_ENDELLIPSIS
+    DEFPUSHBUTTON   "", IDC_BENCH_RUN, 7, 61, 86, 14
+    CONTROL         "", IDC_BENCH_PROGRESS, "msctls_progress32", WS_BORDER, 99, 63, 174, 10
+    LTEXT           "", IDC_BENCH_STATUS, 7, 79, 266, 18, SS_NOPREFIX
+    CONTROL         "", IDC_BENCH_LIST, "SysListView32", LIST_STYLE, 7, 100, 266, 93
+END
+
+// The Usage page. The charts are owner-drawn statics painted by
+// src/dialog/chart.rs.
+IDD_USAGE DIALOGEX 0, 0, 280, 190
+STYLE PAGE_STYLE
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    AUTOCHECKBOX    "", IDC_USAGE_ENABLED, 7, 7, 266, 12, WS_TABSTOP
+    LTEXT           "", IDC_USAGE_HINT, 19, 20, 254, 18
+    LTEXT           "", IDC_USAGE_MODEL, 7, 40, 266, 28, SS_NOPREFIX
+    CONTROL         "", IDC_USAGE_CPU, "Static", SS_OWNERDRAW, 7, 70, 266, 36
+    CONTROL         "", IDC_USAGE_MEMORY, "Static", SS_OWNERDRAW, 7, 110, 266, 36
+    CONTROL         "", IDC_USAGE_GPU, "Static", SS_OWNERDRAW, 7, 150, 266, 36
+END
+
+IDD_ABOUT DIALOGEX 0, 0, 280, 190
+STYLE PAGE_STYLE
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    CONTROL         "", IDC_ABOUT_LOGO, "Static", SS_ICON | SS_REALSIZEIMAGE, 7, 7, 0, 0
+    LTEXT           "Typomend", IDC_ABOUT_NAME, 42, 5, 231, 16
+    LTEXT           "", IDC_ABOUT_TAGLINE, 42, 21, 231, 10
+    LTEXT           "", IDC_ABOUT_VERSION, 42, 31, 231, 10
+    LTEXT           "", IDC_ABOUT_DESCRIPTION, 7, 50, 266, 28
+    CONTROL         "", IDC_ABOUT_LICENSE, "SysLink", WS_TABSTOP, 7, 82, 266, 10
+    CONTROL         "", IDC_ABOUT_LINK, "SysLink", WS_TABSTOP, 7, 98, 266, 10
+END

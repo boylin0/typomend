@@ -1,0 +1,47 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# Keeps typomend/typomend identical to this repository by pushing every
+# branch and tag, and every deletion, after each change.
+
+name: Mirror
+
+on:
+  push:
+    branches: ['**']
+    tags: ['**']
+  delete:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mirror
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    # The mirrored copy carries this workflow too, but has no key to push with.
+    if: github.repository == 'boylin0/typomend'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push branches and tags to typomend/typomend
+        env:
+          DEPLOY_KEY: ${{ secrets.MIRROR_DEPLOY_KEY }}
+          SOURCE_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/mirror_key
+          chmod 600 ~/.ssh/mirror_key
+          echo 'github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl' > ~/.ssh/known_hosts
+          export GIT_SSH_COMMAND='ssh -i ~/.ssh/mirror_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes'
+
+          git clone --bare "$SOURCE_URL" source.git
+          cd source.git
+          # Push explicit refspecs instead of --mirror: GitHub rejects writes to
+          # the read-only refs/pull/* namespace that a mirror clone picks up.
+          git push --prune git@github.com:typomend/typomend.git \
+            '+refs/heads/*:refs/heads/*' \
+            '+refs/tags/*:refs/tags/*'

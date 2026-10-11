@@ -1,0 +1,69 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+name: Bug report
+description: Typomend corrected the wrong text, missed a typo, or misbehaved.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Do not paste private text or unredacted logs.** Typed text and log files can contain passwords, messages and other personal data. Replace anything sensitive with a harmless example before you submit.
+  - type: input
+    id: version
+    attributes:
+      label: Typomend version
+      description: Shown on the About page.
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: Windows 11 24H2
+    validations:
+      required: true
+  - type: input
+    id: app
+    attributes:
+      label: App you were typing in
+      placeholder: Notepad, Chrome, Word
+    validations:
+      required: true
+  - type: input
+    id: ime
+    attributes:
+      label: Input method
+      placeholder: Microsoft Bopomofo, Microsoft New Phonetic
+    validations:
+      required: true
+  - type: input
+    id: mode
+    attributes:
+      label: Correction mode
+      description: The mode selected in the Typomend tray menu.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open Notepad.
+        2. Type ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true

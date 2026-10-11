@@ -1,0 +1,46 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+[package]
+name = "typomend-observer"
+description = "Watches committed IME text through UI Automation and writes corrections back."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+# UI Automation exists only on Windows. On other targets the crate is empty,
+# so the rest of the workspace still builds there.
+[target.'cfg(windows)'.dependencies]
+parking_lot.workspace = true
+serde.workspace = true
+tracing.workspace = true
+typomend-engine.workspace = true
+windows-core.workspace = true
+
+[target.'cfg(windows)'.dependencies.windows]
+workspace = true
+features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_Com",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Ole",
+    "Win32_System_SystemInformation",
+    "Win32_System_Threading",
+    "Win32_UI_Accessibility",
+    "Win32_UI_Input_Ime",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_UI_WindowsAndMessaging",
+]
+
+[target.'cfg(windows)'.dev-dependencies]
+tracing-subscriber.workspace = true
+
+[lints]
+workspace = true
