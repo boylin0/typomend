@@ -1,0 +1,4 @@
+#!/bin/sh
+# Rejects a commit message that does not follow Conventional Commits.
+# Enabled by `cargo xtask install-hooks`.
+exec cargo xtask commit-msg "$1"

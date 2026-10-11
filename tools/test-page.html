@@ -1,0 +1,25 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public -->
+<!-- License, v. 2.0. If a copy of the MPL was not distributed with this -->
+<!-- file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<title>Typomend test page</title>
+<style>
+  body { font: 16px sans-serif; margin: 24px; }
+  label { display: block; margin-top: 16px; }
+  textarea, input, [contenteditable] { width: 480px; font-size: 18px; border: 1px solid #888; padding: 4px; }
+  textarea { height: 80px; }
+  [contenteditable] { min-height: 60px; }
+</style>
+</head>
+<body>
+<!-- One field of each kind a browser offers for text, to try Typomend in a
+     textarea, an input and a contenteditable element. -->
+<label>textarea<br><textarea id="ta" aria-label="test-textarea"></textarea></label>
+<label>input<br><input id="in" aria-label="test-input"></label>
+<label>contenteditable<br><div id="ce" contenteditable="true" aria-label="test-contenteditable"></div></label>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Character pairs that get mixed up although their readings differ, so the
+# homophone table alone would never suggest one for the other. Each line
+# holds characters that may replace each other.
+#
+# ㄟ and ㄣ sit side by side on the standard Bopomofo keyboard.
+問 為
+问 为
+# 什麼 is often typed as ㄇㄛ, the reading of 摸.
+摸 麼
+摸 么

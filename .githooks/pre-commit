@@ -1,0 +1,4 @@
+#!/bin/sh
+# Runs the format, license header and clippy checks CI runs, before every
+# commit. Enabled by `cargo xtask install-hooks`.
+exec cargo xtask pre-commit

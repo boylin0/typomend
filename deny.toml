@@ -1,0 +1,57 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# cargo-deny configuration, checked by CI: https://embarkstudios.github.io/cargo-deny/
+
+[graph]
+# Only the Windows executable ships, so only its dependency graph is checked.
+# The portable crates also build on Linux and macOS for development, but
+# nothing built there is distributed. Listing those targets here would also
+# pull in the Linux-only dependencies of tray-icon, which cargo-deny cannot
+# tell apart from what the Windows build uses.
+targets = ["x86_64-pc-windows-msvc"]
+
+[advisories]
+# Fail on any crate with a RustSec security advisory or that is unmaintained.
+ignore = [
+    { id = "RUSTSEC-2024-0436", reason = "paste is a build-time macro pulled in by candle through gemm; unmaintained, with no known vulnerability and no maintained release to move to" },
+]
+
+[licenses]
+# Licenses of the dependencies that ship in the Typomend executable, all of
+# which can be combined with MPL-2.0. The list holds only what is actually
+# used, so a new dependency under a different license fails CI until someone
+# decides it is acceptable. Copyleft licenses other than MPL-2.0 are not
+# allowed.
+allow = [
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "MIT",
+    "MPL-2.0",
+    "Unicode-3.0",
+    "Unlicense",
+    "Zlib",
+]
+confidence-threshold = 0.9
+
+# Mozilla's root certificates, which ureq's "native-tls" feature always
+# bundles. Typomend verifies against the Windows certificate store instead,
+# but "native-tls-no-default" leaves ureq 3.4 unable to make HTTPS requests.
+[[licenses.exceptions]]
+crate = "webpki-root-certs"
+allow = ["CDLA-Permissive-2.0"]
+
+[licenses.private]
+# Workspace crates that are never published, such as xtask.
+ignore = true
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+# Path dependencies inside the workspace are not wildcards.
+allow-wildcard-paths = true
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

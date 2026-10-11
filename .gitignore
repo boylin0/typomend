@@ -1,0 +1,16 @@
+# Cargo build output
+/target
+
+# .NET build output of tools/UiaProbe
+bin/
+obj/
+
+# Logs may contain typed text
+*.log
+
+# Language model weights, fetched with
+# `cargo run -p typomend-scorer --example download -- <id> models/<id>`
+/models
+
+# Python bytecode from the tools
+__pycache__/

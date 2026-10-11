@@ -1,0 +1,76 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+[workspace]
+resolver = "3"
+members = ["crates/*", "xtask"]
+
+[workspace.package]
+version = "0.0.1"
+edition = "2024"
+rust-version = "1.90"
+license = "MPL-2.0"
+repository = "https://github.com/boylin0/typomend"
+homepage = "https://typomend.github.io"
+authors = ["boylin0"]
+# Typomend ships as an executable from GitHub releases, so no crate goes to
+# crates.io.
+publish = false
+
+[workspace.dependencies]
+typomend-engine = { path = "crates/typomend-engine" }
+typomend-observer = { path = "crates/typomend-observer" }
+typomend-scorer = { path = "crates/typomend-scorer" }
+
+aho-corasick = "1"
+anyhow = "1"
+candle-core = "0.11"
+candle-nn = "0.11"
+candle-transformers = "0.11"
+dirs = "7"
+embed-resource = "3"
+i18n-embed = { version = "0.16", features = ["fluent-system"] }
+i18n-embed-fl = "0.10"
+parking_lot = "0.12"
+rayon = "1"
+rust-embed = "8"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sys-locale = "0.3"
+toml = "1"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+tray-icon = "0.26"
+unic-langid = "0.9"
+# HTTPS through the operating system's TLS stack, for model downloads. On
+# Windows that is SChannel, which keeps the executable small.
+ureq = { version = "3", default-features = false, features = ["native-tls"] }
+windows = "0.62"
+windows-core = "0.62"
+
+# Lints are enforced as errors: CI and the pre-commit hook run clippy with
+# -D warnings, so "warn" here means "must be fixed before merging".
+[workspace.lints.rust]
+missing_docs = "warn"
+unsafe_op_in_unsafe_fn = "warn"
+missing_debug_implementations = "warn"
+unused_qualifications = "warn"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+# Every unsafe block states why it is sound in a SAFETY comment.
+undocumented_unsafe_blocks = "warn"
+# Debugging leftovers and unfinished code never land.
+dbg_macro = "warn"
+todo = "warn"
+unimplemented = "warn"
+# Errors are handled or propagated. clippy.toml still lets tests unwrap.
+unwrap_used = "warn"
+
+# The release build is the typomend.exe users download, so it trades build
+# time for a smaller, faster binary.
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

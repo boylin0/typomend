@@ -1,0 +1,9 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# CI and the pre-commit hook check the formatting; `cargo fmt --all` applies
+# it.
+edition = "2024"
+newline_style = "Unix"
+use_field_init_shorthand = true
