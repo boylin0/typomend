@@ -81,7 +81,8 @@ jobs:
         shell: pwsh
         run: |
           Compress-Archive -DestinationPath $env:ARCHIVE -Path `
-            target/release/typomend.exe, LICENSE, README.md, README.zh-TW.md
+            target/release/typomend.exe, LICENSE, NOTICE.md, TRADEMARKS.md, `
+            README.md, README.zh-TW.md
 
       - name: Write the checksum
         shell: bash

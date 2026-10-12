@@ -133,7 +133,7 @@ Typomend 只讀取游標前的一小段文字，並透過 UI Automation 事件�
 
 ## 下載
 
-從[最新版本](../../releases/latest)下載 `typomend-<版本>-x86_64-pc-windows-msvc.zip`，解壓縮到會長期保留的資料夾，再執行 `typomend.exe`。**開機時啟動** 會從這個資料夾啟動它。檔名結尾是這個版本適用的平台：`x86_64-pc-windows-msvc` 代表 Intel 或 AMD 處理器的 64 位元 Windows。壓縮檔裡也附上授權條款和這份說明。
+從[最新版本](../../releases/latest)下載 `typomend-<版本>-x86_64-pc-windows-msvc.zip`，解壓縮到會長期保留的資料夾，再執行 `typomend.exe`。**開機時啟動** 會從這個資料夾啟動它。檔名結尾是這個版本適用的平台：`x86_64-pc-windows-msvc` 代表 Intel 或 AMD 處理器的 64 位元 Windows。壓縮檔裡也附上授權條款、[NOTICE.md](NOTICE.md)、[TRADEMARKS.md](TRADEMARKS.md) 和這份說明。
 
 每個版本也會附上壓縮檔的 SHA-256 檢查碼，檔名是壓縮檔名稱後面加上 `.sha256`，可以用來驗證下載的檔案。
 
@@ -170,6 +170,37 @@ Typomend 只讀取游標前的一小段文字，並透過 UI Automation 事件�
 
 ## 授權
 
-採用 [Mozilla Public License 2.0](LICENSE) 授權。
+Typomend 是採用 [Mozilla Public License 2.0](LICENSE) 的自由開源軟體。你可以使用、fork、修改、重新命名、替換 Logo，拿它開發競爭產品並販售，都不需要事先徵求同意。
+
+### MPL 2.0 要求什麼？
+
+MPL 2.0 是檔案層級的 copyleft 授權：條件跟著 Typomend 的檔案走，不會擴及你的整個產品。自己使用、不對外散布的修改沒有任何條件，散布時才適用下表：
+
+| 散布的內容 | MPL 2.0 的要求 |
+|------------|----------------|
+| Typomend 的原始碼檔案，不論是否修改 | 維持 MPL 2.0 授權，保留每個檔案開頭的著作權與授權聲明 |
+| 用這些檔案建置的執行檔 | 收到執行檔的人能取得這些檔案的原始碼，並被告知取得方式 |
+| 結合這些檔案與你自己檔案的產品 | 你自己的檔案不受影響，可以採用任何授權，包括專有授權 |
+
+具約束力的是 [LICENSE](LICENSE) 的條文；上表只是摘要，不構成法律意見。
+
+### 如何註明 Typomend？
+
+MPL 2.0 並未要求在使用者介面註明來源。以 Typomend 為基礎開發產品時，仍希望你在文件與 About 頁面註明原始專案：
+
+```text
+基於 Typomend 開發
+原作者：boylin0
+https://github.com/boylin0/typomend
+採用 MPL 2.0 授權
+```
+
+[NOTICE.md](NOTICE.md) 提供 About 頁面範本與上述文字的英文版本，並列出保有各自授權的第三方元件。
+
+### 可以使用 Typomend 名稱和 Logo 嗎？
+
+授權涵蓋的是程式碼，不包含名稱與 Logo：MPL 2.0 第 2.3 條明定不授予任何商標權利。你可以說明產品基於 Typomend，但修改過的版本要使用自己的名稱與 Logo，也不能自稱是官方 Typomend。詳見 [TRADEMARKS.md](TRADEMARKS.md)。
+
+### 貢獻採用什麼授權？
 
 除非你另外明確聲明，你有意提交給本專案的任何貢獻，都會以相同條款授權。

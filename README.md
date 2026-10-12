@@ -133,7 +133,7 @@ Because the file is plain text, a team can keep one list of its product names, p
 
 ## Download
 
-Download `typomend-<version>-x86_64-pc-windows-msvc.zip` from the [latest release](../../releases/latest), extract it to a folder you keep and run `typomend.exe`. **Start with Windows** runs it from that folder. The end of the name is the platform the build runs on: `x86_64-pc-windows-msvc` is 64-bit Windows on an Intel or AMD processor. The zip also holds the license and this readme.
+Download `typomend-<version>-x86_64-pc-windows-msvc.zip` from the [latest release](../../releases/latest), extract it to a folder you keep and run `typomend.exe`. **Start with Windows** runs it from that folder. The end of the name is the platform the build runs on: `x86_64-pc-windows-msvc` is 64-bit Windows on an Intel or AMD processor. The zip also holds the license, [NOTICE.md](NOTICE.md), [TRADEMARKS.md](TRADEMARKS.md) and this readme.
 
 Each release also publishes the zip's SHA-256 checksum, in the same name followed by `.sha256`, so you can verify the download.
 
@@ -170,6 +170,37 @@ Issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-Licensed under the [Mozilla Public License 2.0](LICENSE).
+Typomend is free and open source software under the [Mozilla Public License 2.0](LICENSE). You may use it, fork it, modify it, rename it, replace its logo, build a competing product on it and sell that product, without asking.
+
+### What does MPL 2.0 require?
+
+MPL 2.0 is a file-level copyleft license: its conditions follow Typomend's files, not your whole product. Private use and changes you keep to yourself carry no conditions; they start when you distribute:
+
+| When you distribute | MPL 2.0 requires |
+|---------------------|------------------|
+| Typomend's source files, changed or not | They stay under MPL 2.0, with the copyright and license notices at the top of each file intact |
+| An executable built from them | Recipients can get the source code of those files, and are told how |
+| A product combining them with files of your own | Nothing for your own files, which may use any license, proprietary ones included |
+
+[LICENSE](LICENSE) is the binding text; this table is a summary, not legal advice.
+
+### How should I credit Typomend?
+
+MPL 2.0 does not require a credit in your user interface. If you build a product from Typomend, please name the original project in its documentation and on its About page:
+
+```text
+Based on Typomend
+Originally developed by boylin0
+https://github.com/boylin0/typomend
+Licensed under MPL 2.0
+```
+
+[NOTICE.md](NOTICE.md) has an About page template, a Traditional Chinese version of these lines, and the third-party components that keep their own licenses.
+
+### Can I use the Typomend name and logo?
+
+The license covers the code, not the name or the logo: MPL 2.0 section 2.3 grants no trademark rights. You can say your product is based on Typomend, but a modified version needs a name and logo of its own and must not present itself as official Typomend. See [TRADEMARKS.md](TRADEMARKS.md).
+
+### How are contributions licensed?
 
 Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in this project shall be licensed under the same terms.

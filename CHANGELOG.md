@@ -4,7 +4,16 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+### Added
+
+- `NOTICE.md` records the project's origin, original author, copyright and license, suggests how a product built from Typomend can credit it on its About page, and lists the third-party components that keep their own licenses: the Rust crates, the Unihan and OpenCC data, and the downloadable models.
+- `TRADEMARKS.md` sets out how the Typomend name and logo may be used. Forks, renamed builds and competing products remain allowed under MPL-2.0; a modified version needs its own name and logo and must not present itself as official.
+- The About tab shows the copyright holder, `Copyright © boylin0 and the Typomend contributors`, and the repository address instead of a plain "Source code" link. The executable's file properties name the copyright holder too.
+
 ### Changed
+
+- Every source file starts with a copyright line and an `SPDX-License-Identifier: MPL-2.0` tag above the MPL-2.0 notice, and `cargo xtask headers` checks for all three. `cargo xtask headers --fix` adds the new lines to files that carry only the notice.
+- The release archive also holds `NOTICE.md` and `TRADEMARKS.md`.
 
 - Releases ship as a zip archive named for the version and the platform it runs on, `typomend-<version>-x86_64-pc-windows-msvc.zip` for 64-bit Windows on an Intel or AMD processor, with the license and the readme next to `typomend.exe`. The SHA-256 checksum is now of the archive, in `typomend-<version>-x86_64-pc-windows-msvc.zip.sha256`.
 
