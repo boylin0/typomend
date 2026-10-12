@@ -55,7 +55,7 @@ Project automation follows the [xtask](https://github.com/matklad/cargo-xtask) c
 | Task | What it does |
 |------|--------------|
 | `cargo xtask check` | Everything CI checks: formatting, license headers, clippy, tests |
-| `cargo xtask headers --fix` | Adds the MPL-2.0 notice to source files that lack it |
+| `cargo xtask headers --fix` | Adds the copyright and license header to source files that lack it |
 | `cargo fmt --all` | Formats the code |
 
 ### What is enforced
@@ -63,7 +63,7 @@ Project automation follows the [xtask](https://github.com/matklad/cargo-xtask) c
 | Check | Tool | When |
 |-------|------|------|
 | Formatting | rustfmt, configured in `rustfmt.toml` | pre-commit hook, CI |
-| MPL-2.0 notice at the top of every source file, Python files included | `cargo xtask headers` | pre-commit hook, CI |
+| Copyright and license header at the top of every source file, Python files included | `cargo xtask headers` | pre-commit hook, CI |
 | Lints, as errors | clippy, configured under `[workspace.lints]` in `Cargo.toml` | pre-commit hook, CI |
 | Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/) | `cargo xtask commit-msg` | commit-msg hook |
 | Tests | `cargo test` | CI |
@@ -73,15 +73,20 @@ Every `unsafe` block needs a `// SAFETY:` comment explaining why it is sound, ev
 
 ### License headers
 
-Typomend is licensed under MPL-2.0, which applies file by file. Every source file starts with this notice, in the file's comment syntax:
+Typomend is licensed under MPL-2.0, which applies file by file. Every source file starts with this header, in the file's comment syntax:
 
 ```rust
+// Copyright boylin0 and the Typomend contributors.
+// SPDX-License-Identifier: MPL-2.0
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 ```
 
-`cargo xtask headers --fix` adds it to new files, Python files included.
+`cargo xtask headers --fix` adds it to new files, Python files included, and adds the first two lines to files that carry only the notice below them.
+
+**Code or data taken from another project keeps its own copyright and license notice instead of this header.** List it under third-party components in [NOTICE.md](NOTICE.md), as the files under `crates/typomend-scorer/data/` generated from Unihan and OpenCC are, and exclude it in `header_files` in `xtask/src/main.rs` when it is in a format the check covers.
 
 ### Watching the observer
 

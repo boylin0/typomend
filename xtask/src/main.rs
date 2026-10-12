@@ -1,3 +1,6 @@
+// Copyright boylin0 and the Typomend contributors.
+// SPDX-License-Identifier: MPL-2.0
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -19,16 +22,28 @@ usage: cargo xtask <task>
 tasks:
   check           run every check CI runs: format, license headers, clippy, tests
   pre-commit      fast checks for the pre-commit hook: format, headers, clippy
-  headers [--fix] check, or add, the MPL-2.0 notice at the top of source files
+  headers [--fix] check, or add, the copyright and license header of source files
   commit-msg FILE check that a commit message follows Conventional Commits
   install-hooks   point git at .githooks/ so the hooks run on every commit";
 
-/// The notice MPL-2.0 Exhibit A asks for, one line per entry.
-const NOTICE: [&str; 3] = [
+/// Header at the top of every source file, one line per entry: the copyright
+/// line, the SPDX tag and the notice MPL-2.0 Exhibit A asks for. An empty entry
+/// is a blank comment line.
+///
+/// MPL-2.0 section 3.4 forbids removing copyright and license notices from the
+/// source, so these lines stay in every copy and modification of the file.
+const HEADER: [&str; 6] = [
+    "Copyright boylin0 and the Typomend contributors.",
+    "SPDX-License-Identifier: MPL-2.0",
+    "",
     "This Source Code Form is subject to the terms of the Mozilla Public",
     "License, v. 2.0. If a copy of the MPL was not distributed with this",
     "file, You can obtain one at https://mozilla.org/MPL/2.0/.",
 ];
+
+/// The Exhibit A notice alone, which files carried before the copyright line
+/// and the SPDX tag were added above it.
+const NOTICE: &[&str] = HEADER.split_at(3).1;
 
 /// Conventional Commits types accepted by `commit-msg`.
 const COMMIT_TYPES: [&str; 11] = [
@@ -129,29 +144,56 @@ fn header_files() -> Result<Vec<PathBuf>> {
         .collect())
 }
 
-/// Returns whether the first lines of `text` carry the license notice.
-fn has_notice(text: &str) -> bool {
-    text.lines().take(10).any(|line| line.contains(NOTICE[0]))
+/// Returns whether the first lines of `text` carry every line of the header.
+fn has_header(text: &str) -> bool {
+    let top: Vec<&str> = text.lines().take(10).collect();
+    HEADER
+        .iter()
+        .filter(|line| !line.is_empty())
+        .all(|line| top.iter().any(|t| t.contains(line)))
 }
 
-/// Fails when a source file lacks the license notice, or adds it when `fix`
-/// is set.
+/// Formats `lines` as comments with the delimiters of `style`, ending each
+/// with `eol`.
+///
+/// An empty entry becomes an empty line comment, or is left out where the
+/// syntax only has block comments.
+fn commented(lines: &[&str], (open, close): (&str, &str), eol: &str) -> String {
+    lines
+        .iter()
+        .filter_map(|line| match (line.is_empty(), close.is_empty()) {
+            (false, _) => Some(format!("{open}{line}{close}{eol}")),
+            (true, true) => Some(format!("{}{eol}", open.trim_end())),
+            (true, false) => None,
+        })
+        .collect()
+}
+
+/// Returns `text` with the header at the top, in place of the Exhibit A
+/// notice alone when the file starts with it.
+fn with_header(text: &str, style: (&str, &str)) -> String {
+    // PowerShell scripts are checked out with CRLF endings.
+    let eol = if text.contains("\r\n") { "\r\n" } else { "\n" };
+    let header = commented(&HEADER, style, eol);
+    match text.strip_prefix(&commented(NOTICE, style, eol)) {
+        Some(rest) => format!("{header}{rest}"),
+        None => format!("{header}{eol}{text}"),
+    }
+}
+
+/// Fails when a source file lacks the header, or adds it when `fix` is set.
 fn headers(fix: bool) -> Result {
     eprintln!("xtask: license headers");
     let mut missing = Vec::new();
     for path in header_files()? {
         let text = std::fs::read_to_string(&path)
             .map_err(|e| format!("reading {}: {e}", path.display()))?;
-        if has_notice(&text) {
+        if has_header(&text) {
             continue;
         }
         if fix {
-            let (open, close) = comment_style(&path).unwrap_or(("// ", ""));
-            let notice: String = NOTICE
-                .iter()
-                .map(|line| format!("{open}{line}{close}\n"))
-                .collect();
-            std::fs::write(&path, format!("{notice}\n{text}"))
+            let style = comment_style(&path).unwrap_or(("// ", ""));
+            std::fs::write(&path, with_header(&text, style))
                 .map_err(|e| format!("writing {}: {e}", path.display()))?;
         }
         missing.push(path);
@@ -164,11 +206,11 @@ fn headers(fix: bool) -> Result {
         .map(|p| format!("  {}", relative(p)))
         .collect();
     if fix {
-        eprintln!("added the MPL-2.0 notice to:\n{}", list.join("\n"));
+        eprintln!("added the license header to:\n{}", list.join("\n"));
         Ok(())
     } else {
         Err(format!(
-            "missing the MPL-2.0 notice:\n{}\nrun `cargo xtask headers --fix` to add it",
+            "missing the license header:\n{}\nrun `cargo xtask headers --fix` to add it",
             list.join("\n")
         ))
     }
@@ -292,9 +334,37 @@ mod tests {
     }
 
     #[test]
-    fn finds_the_notice_near_the_top() {
-        let header: String = NOTICE.iter().map(|l| format!("// {l}\n")).collect();
-        assert!(has_notice(&format!("{header}\nfn main() {{}}")));
-        assert!(!has_notice("fn main() {}"));
+    fn finds_the_header_near_the_top() {
+        let header = commented(&HEADER, ("// ", ""), "\n");
+        assert!(has_header(&format!("{header}\nfn main() {{}}")));
+        assert!(!has_header("fn main() {}"));
+        let notice = commented(NOTICE, ("// ", ""), "\n");
+        assert!(!has_header(&format!("{notice}\nfn main() {{}}")));
+    }
+
+    #[test]
+    fn adds_the_header_to_a_file_without_one() {
+        let fixed = with_header("fn main() {}\n", ("// ", ""));
+        assert!(fixed.starts_with("// Copyright boylin0"));
+        assert!(fixed.contains("MPL-2.0\n//\n// This Source Code Form"));
+        assert!(fixed.ends_with("MPL/2.0/.\n\nfn main() {}\n"));
+    }
+
+    #[test]
+    fn replaces_the_notice_alone_with_the_header() {
+        let notice = commented(NOTICE, ("# ", ""), "\r\n");
+        let fixed = with_header(&format!("{notice}\r\nparam()\r\n"), ("# ", ""));
+        assert_eq!(
+            fixed,
+            format!("{}\r\nparam()\r\n", commented(&HEADER, ("# ", ""), "\r\n"))
+        );
+        assert_eq!(fixed.matches("This Source Code Form").count(), 1);
+    }
+
+    #[test]
+    fn leaves_out_empty_block_comments() {
+        let header = commented(&HEADER, ("<!-- ", " -->"), "\n");
+        assert_eq!(header.lines().count(), 5);
+        assert!(!header.contains("<!--  -->"));
     }
 }
