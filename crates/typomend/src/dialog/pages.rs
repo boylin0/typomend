@@ -236,15 +236,18 @@ pub(super) fn texts(page: Page, hwnd: HWND) {
             );
             controls::set_text(hwnd, IDC_ABOUT_TAGLINE, &fl!("about-tagline"));
             controls::set_text(hwnd, IDC_ABOUT_DESCRIPTION, &fl!("about-description"));
+            controls::set_text(hwnd, IDC_ABOUT_COPYRIGHT, &fl!("about-copyright"));
             controls::set_text(
                 hwnd,
                 IDC_ABOUT_LICENSE,
                 &fl!("about-license", license = "<a>MPL-2.0</a>"),
             );
+            let repository = env!("CARGO_PKG_REPOSITORY");
+            let address = repository.strip_prefix("https://").unwrap_or(repository);
             controls::set_text(
                 hwnd,
                 IDC_ABOUT_LINK,
-                &format!("<a>{}</a>", fl!("about-source")),
+                &fl!("about-source", address = format!("<a>{address}</a>")),
             );
         }
     }

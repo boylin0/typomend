@@ -80,6 +80,7 @@
 #define IDC_ABOUT_LINK          1505
 #define IDC_ABOUT_LOGO          1506
 #define IDC_ABOUT_TAGLINE       1507
+#define IDC_ABOUT_COPYRIGHT     1508
 
 #define IDC_LM_INTRO            1601
 #define IDC_LM_MODEL_LABEL      1602

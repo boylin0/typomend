@@ -83,6 +83,7 @@ pub const IDC_ABOUT_LICENSE: i32 = 1504;
 pub const IDC_ABOUT_LINK: i32 = 1505;
 pub const IDC_ABOUT_LOGO: i32 = 1506;
 pub const IDC_ABOUT_TAGLINE: i32 = 1507;
+pub const IDC_ABOUT_COPYRIGHT: i32 = 1508;
 
 // Masked language model page.
 pub const IDC_LM_INTRO: i32 = 1601;

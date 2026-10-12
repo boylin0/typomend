@@ -48,7 +48,7 @@ BEGIN
             VALUE "FileDescription",  "Typomend"
             VALUE "FileVersion",      VERSION_STR
             VALUE "InternalName",     "typomend"
-            VALUE "LegalCopyright",   "Licensed under MPL-2.0"
+            VALUE "LegalCopyright",   "Copyright boylin0 and the Typomend contributors. Licensed under MPL-2.0."
             VALUE "OriginalFilename", "typomend.exe"
             VALUE "ProductName",      "Typomend"
             VALUE "ProductVersion",   VERSION_STR
@@ -207,6 +207,7 @@ BEGIN
     LTEXT           "", IDC_ABOUT_TAGLINE, 42, 21, 231, 10
     LTEXT           "", IDC_ABOUT_VERSION, 42, 31, 231, 10
     LTEXT           "", IDC_ABOUT_DESCRIPTION, 7, 50, 266, 28
-    CONTROL         "", IDC_ABOUT_LICENSE, "SysLink", WS_TABSTOP, 7, 82, 266, 10
-    CONTROL         "", IDC_ABOUT_LINK, "SysLink", WS_TABSTOP, 7, 98, 266, 10
+    LTEXT           "", IDC_ABOUT_COPYRIGHT, 7, 82, 266, 10, SS_NOPREFIX
+    CONTROL         "", IDC_ABOUT_LICENSE, "SysLink", WS_TABSTOP, 7, 98, 266, 10
+    CONTROL         "", IDC_ABOUT_LINK, "SysLink", WS_TABSTOP, 7, 114, 266, 10
 END

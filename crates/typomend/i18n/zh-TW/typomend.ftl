@@ -233,5 +233,6 @@ settings-open-logs = 開啟記錄檔資料夾
 about-tagline = 照常輸入，原地修正。
 about-description = 在任何程式裡，於輸入法確認送出文字後修正錯字，不需要更換輸入法。
 about-version = 版本 { $version }
+about-copyright = 著作權所有 © boylin0 與 Typomend 貢獻者
 about-license = 授權：{ $license }
-about-source = 原始碼
+about-source = 原始碼：{ $address }

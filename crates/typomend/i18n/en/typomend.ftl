@@ -295,8 +295,10 @@ settings-open-logs = Open log folder
 about-tagline = Keep typing. Mend in place.
 about-description = Fixes typos after your input method commits them, in any app, without replacing your input method.
 about-version = Version { $version }
+about-copyright = Copyright © boylin0 and the Typomend contributors
 # Variables:
 #   $license (String) - the license name, already marked up as a link
 about-license = License: { $license }
-# Shown as a link to the source repository.
-about-source = Source code
+# Variables:
+#   $address (String) - the address of the source repository, already marked up as a link
+about-source = Source code: { $address }
