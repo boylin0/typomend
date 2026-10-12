@@ -45,7 +45,7 @@ Typomend works on the text after the IME commits it, so it does not care which I
 
 | I want to | Do this |
 |-----------|---------|
-| Run it | Download `typomend.exe` from the [latest release](../../releases/latest) and start it |
+| Run it | Download `typomend-<version>-x86_64-pc-windows-msvc.zip` from the [latest release](../../releases/latest), extract it and start `typomend.exe` |
 | Open the settings | Left-click the tray icon |
 | Pause corrections | Right-click the tray icon, then **Pause corrections** |
 | Start with Windows | Tray menu or **Settings** tab, **Start with Windows** |
@@ -133,7 +133,9 @@ Because the file is plain text, a team can keep one list of its product names, p
 
 ## Download
 
-Download `typomend.exe` from the [latest release](../../releases/latest) and run it. Each release also publishes `typomend.exe.sha256` so you can verify the download.
+Download `typomend-<version>-x86_64-pc-windows-msvc.zip` from the [latest release](../../releases/latest), extract it to a folder you keep and run `typomend.exe`. **Start with Windows** runs it from that folder. The end of the name is the platform the build runs on: `x86_64-pc-windows-msvc` is 64-bit Windows on an Intel or AMD processor. The zip also holds the license and this readme.
+
+Each release also publishes the zip's SHA-256 checksum, in the same name followed by `.sha256`, so you can verify the download.
 
 Run with `--background` to start hidden in the notification area; this is how the **Start with Windows** entry launches it.
 

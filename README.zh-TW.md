@@ -45,7 +45,7 @@ Typomend 處理的是輸入法送出之後的文字，所以不管文字是哪�
 
 | 想做的事 | 做法 |
 |----------|------|
-| 執行 | 從[最新版本](../../releases/latest)下載 `typomend.exe` 後啟動 |
+| 執行 | 從[最新版本](../../releases/latest)下載 `typomend-<版本>-x86_64-pc-windows-msvc.zip`，解壓縮後啟動 `typomend.exe` |
 | 開啟設定 | 左鍵點系統匣圖示 |
 | 暫停修正 | 右鍵點系統匣圖示，選 **暫停修正** |
 | 開機時啟動 | 系統匣選單或 **設定** 分頁，勾選 **開機時啟動** |
@@ -133,7 +133,9 @@ Typomend 只讀取游標前的一小段文字，並透過 UI Automation 事件�
 
 ## 下載
 
-從[最新版本](../../releases/latest)下載 `typomend.exe` 後執行。每個版本也會附上 `typomend.exe.sha256`，可以用來驗證下載的檔案。
+從[最新版本](../../releases/latest)下載 `typomend-<版本>-x86_64-pc-windows-msvc.zip`，解壓縮到會長期保留的資料夾，再執行 `typomend.exe`。**開機時啟動** 會從這個資料夾啟動它。檔名結尾是這個版本適用的平台：`x86_64-pc-windows-msvc` 代表 Intel 或 AMD 處理器的 64 位元 Windows。壓縮檔裡也附上授權條款和這份說明。
+
+每個版本也會附上壓縮檔的 SHA-256 檢查碼，檔名是壓縮檔名稱後面加上 `.sha256`，可以用來驗證下載的檔案。
 
 加上 `--background` 參數會直接縮在系統匣啟動，**開機時啟動** 就是用這個方式。
 

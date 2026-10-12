@@ -4,6 +4,10 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+### Changed
+
+- Releases ship as a zip archive named for the version and the platform it runs on, `typomend-<version>-x86_64-pc-windows-msvc.zip` for 64-bit Windows on an Intel or AMD processor, with the license and the readme next to `typomend.exe`. The SHA-256 checksum is now of the archive, in `typomend-<version>-x86_64-pc-windows-msvc.zip.sha256`.
+
 ## [0.0.1] - 2026-10-11
 
 First public release.

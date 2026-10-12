@@ -19,7 +19,7 @@ env:
 
 jobs:
   release:
-    name: Build and publish typomend.exe
+    name: Build and publish the Windows archive
     runs-on: windows-latest
     timeout-minutes: 45
     permissions:
@@ -62,16 +62,32 @@ jobs:
 
       - run: cargo build --release --locked --package typomend
 
+      # The archive name ends in the target triple of the build, as ripgrep,
+      # bat and nushell name theirs, so the download says which system and
+      # processor it runs on. The build has no --target, so that is the host.
+      - name: Name the archive
+        shell: bash
+        run: |
+          target=$(rustc -vV | sed -n 's/^host: //p')
+          echo "ARCHIVE=typomend-$VERSION-$target.zip" >> "$GITHUB_ENV"
+
+      # The files sit at the root of the archive, without a folder of their
+      # own, because Extract All in File Explorer already extracts into a
+      # folder named after the archive.
+      - name: Package the release
+        shell: pwsh
+        run: |
+          Compress-Archive -DestinationPath $env:ARCHIVE -Path `
+            target/release/typomend.exe, LICENSE, README.md, README.zh-TW.md
+
       - name: Write the checksum
         shell: bash
-        working-directory: target/release
-        run: sha256sum typomend.exe > typomend.exe.sha256
+        run: sha256sum "$ARCHIVE" > "$ARCHIVE.sha256"
 
       - name: Publish the release
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" \
-            target/release/typomend.exe target/release/typomend.exe.sha256 \
+          gh release create "$GITHUB_REF_NAME" "$ARCHIVE" "$ARCHIVE.sha256" \
             --verify-tag --title "$GITHUB_REF_NAME" --notes-file notes.md
