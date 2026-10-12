@@ -1,0 +1,34 @@
+# Copyright boylin0 and the Typomend contributors.
+# SPDX-License-Identifier: MPL-2.0
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# cargo-about configuration: https://embarkstudios.github.io/cargo-about/
+# `cargo xtask notices` renders it with about.hbs into the third-party
+# notices that ship with each release.
+
+# The licenses deny.toml allows, keep the two lists in sync. When a crate
+# offers a choice, the first one listed here is used.
+accepted = [
+    "MIT",
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "MPL-2.0",
+    "Unicode-3.0",
+    "Unlicense",
+    "Zlib",
+    "CDLA-Permissive-2.0",
+]
+
+# Only the Windows executable ships, so only its dependency graph is listed.
+targets = ["x86_64-pc-windows-msvc"]
+# Build scripts, proc macros' build dependencies and test-only crates are not
+# part of typomend.exe.
+ignore-build-dependencies = true
+ignore-dev-dependencies = true
+
+# The workspace crates are Typomend itself, covered by LICENSE.
+[private]
+ignore = true

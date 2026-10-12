@@ -133,7 +133,7 @@ Typomend 只讀取游標前的一小段文字，並透過 UI Automation 事件�
 
 ## 下載
 
-從[最新版本](../../releases/latest)下載 `typomend-<版本>-x86_64-pc-windows-msvc.zip`，解壓縮到會長期保留的資料夾，再執行 `typomend.exe`。**開機時啟動** 會從這個資料夾啟動它。檔名結尾是這個版本適用的平台：`x86_64-pc-windows-msvc` 代表 Intel 或 AMD 處理器的 64 位元 Windows。壓縮檔裡也附上授權條款、[NOTICE.md](NOTICE.md)、[TRADEMARKS.md](TRADEMARKS.md) 和這份說明。
+從[最新版本](../../releases/latest)下載 `typomend-<版本>-x86_64-pc-windows-msvc.zip`，解壓縮到會長期保留的資料夾，再執行 `typomend.exe`。**開機時啟動** 會從這個資料夾啟動它。檔名結尾是這個版本適用的平台：`x86_64-pc-windows-msvc` 代表 Intel 或 AMD 處理器的 64 位元 Windows。壓縮檔裡也附上授權條款、[NOTICE.md](NOTICE.md)、[TRADEMARKS.md](TRADEMARKS.md)、這份說明，以及列出 `typomend.exe` 內含第三方軟體與資料授權的 `THIRD-PARTY-NOTICES.txt`。
 
 每個版本也會附上壓縮檔的 SHA-256 檢查碼，檔名是壓縮檔名稱後面加上 `.sha256`，可以用來驗證下載的檔案。
 

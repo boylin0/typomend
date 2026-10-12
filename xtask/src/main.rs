@@ -9,8 +9,9 @@
 //!
 //! This follows the xtask convention (<https://github.com/matklad/cargo-xtask>):
 //! project automation is a plain Rust program in the workspace, so it needs
-//! nothing beyond the Rust toolchain. The git hooks in `.githooks/` call into
-//! it, which keeps the checks a hook runs identical to the ones CI runs.
+//! nothing beyond the Rust toolchain, except `notices`, which runs cargo-about.
+//! The git hooks in `.githooks/` call into it, which keeps the checks a hook
+//! runs identical to the ones CI runs.
 
 use std::path::{Path, PathBuf};
 use std::process::{Command, ExitCode};
@@ -23,6 +24,7 @@ tasks:
   check           run every check CI runs: format, license headers, clippy, tests
   pre-commit      fast checks for the pre-commit hook: format, headers, clippy
   headers [--fix] check, or add, the copyright and license header of source files
+  notices         write the third-party notices the release ships to target/
   commit-msg FILE check that a commit message follows Conventional Commits
   install-hooks   point git at .githooks/ so the hooks run on every commit";
 
@@ -45,6 +47,25 @@ const HEADER: [&str; 6] = [
 /// and the SPDX tag were added above it.
 const NOTICE: &[&str] = HEADER.split_at(3).1;
 
+/// Third-party notices of the crates and data in typomend.exe, relative to the
+/// workspace root. The release archive ships this file.
+const NOTICES_FILE: &str = "target/THIRD-PARTY-NOTICES.txt";
+
+/// Data built into typomend.exe from third-party sources: where it comes from,
+/// and the file next to it that holds its copyright and license notice.
+const DATA_NOTICES: [(&str, &str); 2] = [
+    (
+        "Unicode Unihan database, https://www.unicode.org/charts/unihan.html\n\
+         Used by crates/typomend-scorer/data/readings.txt",
+        "crates/typomend-scorer/data/LICENSE-UNICODE",
+    ),
+    (
+        "OpenCC, by Carbo Kuo and contributors, https://github.com/BYVoid/OpenCC\n\
+         Used by crates/typomend-scorer/data/t2s.txt",
+        "crates/typomend-scorer/data/LICENSE-OPENCC",
+    ),
+];
+
 /// Conventional Commits types accepted by `commit-msg`.
 const COMMIT_TYPES: [&str; 11] = [
     "build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test",
@@ -57,6 +78,7 @@ fn main() -> ExitCode {
         Some("check") => check(true),
         Some("pre-commit") => check(false),
         Some("headers") => headers(args.iter().any(|a| a == "--fix")),
+        Some("notices") => notices(),
         Some("commit-msg") => match args.get(1) {
             Some(file) => commit_msg(Path::new(file)),
             None => Err("commit-msg needs the path of the message file".into()),
@@ -216,6 +238,43 @@ fn headers(fix: bool) -> Result {
     }
 }
 
+/// Writes the licenses of the third-party crates and data in typomend.exe to
+/// [`NOTICES_FILE`].
+///
+/// cargo-about lists the crates, as configured in `about.toml` and laid out by
+/// `about.hbs`, and fails on a license the configuration does not accept. The
+/// notices of the data in [`DATA_NOTICES`] follow.
+fn notices() -> Result {
+    // cargo-about refuses to write to a redirected stdout on Windows, so it
+    // writes the file itself and the data notices are appended afterwards.
+    step(
+        "cargo about",
+        &[
+            "about",
+            "generate",
+            "--locked",
+            "--fail",
+            "--output-file",
+            NOTICES_FILE,
+            "about.hbs",
+        ],
+    )
+    .map_err(|e| {
+        format!("{e}\ninstall cargo-about with `cargo install cargo-about --locked --features cli`")
+    })?;
+    let file = root().join(NOTICES_FILE);
+    let mut text =
+        std::fs::read_to_string(&file).map_err(|e| format!("reading {NOTICES_FILE}: {e}"))?;
+    for (source, license) in DATA_NOTICES {
+        let notice = std::fs::read_to_string(root().join(license))
+            .map_err(|e| format!("reading {license}: {e}"))?;
+        text.push_str(&format!("\n{}\n{source}\n\n{notice}", "-".repeat(80)));
+    }
+    std::fs::write(&file, text).map_err(|e| format!("writing {NOTICES_FILE}: {e}"))?;
+    eprintln!("wrote {NOTICES_FILE}");
+    Ok(())
+}
+
 /// Checks the subject line of the commit message in `file`.
 fn commit_msg(file: &Path) -> Result {
     let text =
@@ -359,6 +418,13 @@ mod tests {
             format!("{}\r\nparam()\r\n", commented(&HEADER, ("# ", ""), "\r\n"))
         );
         assert_eq!(fixed.matches("This Source Code Form").count(), 1);
+    }
+
+    #[test]
+    fn finds_the_data_notices() {
+        for (_, license) in DATA_NOTICES {
+            assert!(root().join(license).is_file(), "{license}");
+        }
     }
 
     #[test]

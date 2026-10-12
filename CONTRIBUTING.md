@@ -56,6 +56,7 @@ Project automation follows the [xtask](https://github.com/matklad/cargo-xtask) c
 |------|--------------|
 | `cargo xtask check` | Everything CI checks: formatting, license headers, clippy, tests |
 | `cargo xtask headers --fix` | Adds the copyright and license header to source files that lack it |
+| `cargo xtask notices` | Writes the licenses of the third-party crates and data in `typomend.exe` to `target/THIRD-PARTY-NOTICES.txt`; needs [cargo-about](https://github.com/EmbarkStudios/cargo-about) |
 | `cargo fmt --all` | Formats the code |
 
 ### What is enforced
@@ -68,6 +69,7 @@ Project automation follows the [xtask](https://github.com/matklad/cargo-xtask) c
 | Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/) | `cargo xtask commit-msg` | commit-msg hook |
 | Tests | `cargo test` | CI |
 | Dependency licenses, security advisories, crate sources | [cargo-deny](https://github.com/EmbarkStudios/cargo-deny), configured in `deny.toml` | CI |
+| Third-party notices can be written for every crate in `typomend.exe` | `cargo xtask notices`, with cargo-about configured in `about.toml` | CI, release |
 
 Every `unsafe` block needs a `// SAFETY:` comment explaining why it is sound, every public item of the library crates needs a doc comment, and `unwrap()` is not allowed outside tests. Comments follow the style of the Rust standard library: a doc comment opens with a one-sentence summary in the third person, such as "Returns the rule list.", and a plain comment explains why the code does something, not what it does.
 
@@ -86,7 +88,7 @@ Typomend is licensed under MPL-2.0, which applies file by file. Every source fil
 
 `cargo xtask headers --fix` adds it to new files, Python files included, and adds the first two lines to files that carry only the notice below them.
 
-**Code or data taken from another project keeps its own copyright and license notice instead of this header.** List it under third-party components in [NOTICE.md](NOTICE.md), as the files under `crates/typomend-scorer/data/` generated from Unihan and OpenCC are, and exclude it in `header_files` in `xtask/src/main.rs` when it is in a format the check covers.
+**Code or data taken from another project keeps its own copyright and license notice instead of this header.** Put its license file next to it, list it under third-party components in [NOTICE.md](NOTICE.md) and add it to `DATA_NOTICES` in `xtask/src/main.rs`, as the Unihan and OpenCC data under `crates/typomend-scorer/data/` are. Exclude it in `header_files` when it is in a format the header check covers.
 
 ### Watching the observer
 

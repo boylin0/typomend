@@ -133,7 +133,7 @@ Because the file is plain text, a team can keep one list of its product names, p
 
 ## Download
 
-Download `typomend-<version>-x86_64-pc-windows-msvc.zip` from the [latest release](../../releases/latest), extract it to a folder you keep and run `typomend.exe`. **Start with Windows** runs it from that folder. The end of the name is the platform the build runs on: `x86_64-pc-windows-msvc` is 64-bit Windows on an Intel or AMD processor. The zip also holds the license, [NOTICE.md](NOTICE.md), [TRADEMARKS.md](TRADEMARKS.md) and this readme.
+Download `typomend-<version>-x86_64-pc-windows-msvc.zip` from the [latest release](../../releases/latest), extract it to a folder you keep and run `typomend.exe`. **Start with Windows** runs it from that folder. The end of the name is the platform the build runs on: `x86_64-pc-windows-msvc` is 64-bit Windows on an Intel or AMD processor. The zip also holds the license, [NOTICE.md](NOTICE.md), [TRADEMARKS.md](TRADEMARKS.md), this readme, and `THIRD-PARTY-NOTICES.txt` with the licenses of the third-party software and data built into `typomend.exe`.
 
 Each release also publishes the zip's SHA-256 checksum, in the same name followed by `.sha256`, so you can verify the download.
 

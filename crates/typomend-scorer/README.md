@@ -139,8 +139,8 @@ cargo run --release -p typomend-scorer --example download -- <id> models/<id>
 
 | 檔案 | 來源 | 授權 |
 |------|------|------|
-| `data/readings.txt` | Unicode Unihan（kMandarin、kHanyuPinlu、kTGHZ2013），取 Big5 常用字 5401 字與通用規範漢字 8105 字，並標記繁簡 | Unicode License v3 |
-| `data/t2s.txt` | OpenCC `TSCharacters.txt`，只取一對一的字 | Apache-2.0 |
+| `data/readings.txt` | Unicode Unihan（kMandarin、kHanyuPinlu、kTGHZ2013），取 Big5 常用字 5401 字與通用規範漢字 8105 字，並標記繁簡 | Unicode License v3，全文見 [`data/LICENSE-UNICODE`](data/LICENSE-UNICODE) |
+| `data/t2s.txt` | OpenCC `TSCharacters.txt`，只取一對一的字 | Apache-2.0，全文見 [`data/LICENSE-OPENCC`](data/LICENSE-OPENCC) |
 | `data/confusions.txt` | 讀音不同但常混淆的字，手動維護 | MPL-2.0 |
 
 用 `python tools/build-scorer-data.py <Unihan 目錄> <TSCharacters.txt>` 重新產生前兩個檔案。

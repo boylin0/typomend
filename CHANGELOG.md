@@ -4,6 +4,11 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+### Added
+
+- The release archive holds `THIRD-PARTY-NOTICES.txt`, with the license of every third-party crate built into `typomend.exe` and the notices of the Unihan and OpenCC data, as their MIT, Apache-2.0 and Unicode licenses ask. `cargo xtask notices` generates it with cargo-about, and CI checks that it can on every push.
+- The full Unicode License v3 and Apache License 2.0 texts of the Unihan and OpenCC data sit next to that data, in `crates/typomend-scorer/data/LICENSE-UNICODE` and `LICENSE-OPENCC`.
+
 ## [0.0.2] - 2026-10-12
 
 ### Added
