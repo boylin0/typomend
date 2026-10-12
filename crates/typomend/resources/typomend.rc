@@ -18,6 +18,8 @@
 #include "resource.h"
 
 // Common controls version 6, per-monitor DPI awareness and the supported OS.
+// build.rs writes this file into OUT_DIR, which is on the include path, from
+// typomend.manifest.in.
 CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "typomend.manifest"
 
 // The application icon and the four tray icons, which differ in ink color for
