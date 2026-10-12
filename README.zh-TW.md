@@ -195,7 +195,20 @@ https://github.com/boylin0/typomend
 採用 MPL 2.0 授權
 ```
 
-[NOTICE.md](NOTICE.md) 提供 About 頁面範本與上述文字的英文版本，並列出保有各自授權的第三方元件。
+MPL 2.0 確實要求的是：讓收到執行檔的人知道去哪裡取得其中 MPL 檔案的原始碼。About 頁面可以同時做到這兩件事：
+
+```text
+YourApp 1.2.0
+Copyright 2027 Your Name
+原始碼：https://example.com/yourapp
+
+基於 Typomend 開發
+原作者：boylin0
+https://github.com/boylin0/typomend
+採用 MPL 2.0 授權
+```
+
+英文版的署名文字見 [README.md](README.md#how-should-i-credit-typomend)。Typomend 自己的 About 分頁內容來自 `crates/typomend/i18n/<語言>/typomend.ftl` 裡的 `about-*` 訊息。[NOTICE.md](NOTICE.md) 記錄專案來源與第三方元件，在你的副本裡保留它，就能讓這份紀錄跟著程式碼走。
 
 ### 可以使用 Typomend 名稱和 Logo 嗎？
 

@@ -1,29 +1,38 @@
 # Trademark policy
 
-This policy covers the Typomend name and logo: what you can do with them without asking, and what a product built from Typomend needs to change. It is separate from the copyright license. MPL 2.0 lets you use, modify and sell the code, and its section 2.3 states that it grants no rights in the trademarks or logos of any contributor.
+Typomend and the Typomend logo are trademarks of boylin0. This policy explains what you can do with them without asking, and what a product built from Typomend needs to change.
+
+It is separate from the copyright license. MPL 2.0 lets you use, modify and sell the code, and its section 2.3 states that it grants no rights in the trademarks or logos of any contributor. **This policy adds no condition to that license**: anything MPL 2.0 lets you do with the code, including selling a competing product, stays allowed under a name and logo of your own.
 
 ## Quick reference
 
 | You want to | Allowed? |
 |-------------|----------|
 | Say your product is based on, forked from or compatible with Typomend | Yes |
-| Keep "Typomend" in source code, file names, crate names, and copyright and license notices | Yes |
+| Name an add-on, rule list or tool "for Typomend", such as "Legal terms for Typomend" | Yes |
+| Keep "Typomend" in source code, file names, internal crate names, and copyright and license notices | Yes |
 | Redistribute an official release unmodified, under the Typomend name | Yes |
 | Write about, review, teach or link to Typomend, with or without its logo | Yes |
 | Distribute a modified version, including a paid or competing one | Yes, under your own name and logo |
 | Call a modified version Typomend, or a name that could be mistaken for it | No |
 | Use the Typomend logo or icons as the logo or icon of your product | No |
 | Claim or suggest that your product is official, or endorsed or sponsored by the Typomend project | No |
-| Use Typomend in a domain name, app store listing, account name or company name | Ask first |
+| Use Typomend in a domain name, package name, app store listing, account name or company name | Ask first |
 
 ## Which marks does this cover?
 
 - The name **Typomend**, and names that could be mistaken for it, such as Typomend Pro, Typomend+ or TypoMend Lite.
 - The Typomend logo and lockups in `.github/assets/`, and the program and tray icons in `crates/typomend/resources/`.
 
-boylin0 maintains these marks for the official project: the repository at <https://github.com/boylin0/typomend>, its mirror at <https://github.com/typomend/typomend> and the website <https://typomend.github.io>. Releases published in that repository are the official Typomend releases.
+The official project is the repository at <https://github.com/boylin0/typomend>, its mirror at <https://github.com/typomend/typomend> and the website <https://typomend.github.io>. Releases published in that repository are the official Typomend releases.
 
 The logo files are in the repository, so you may copy them as part of the source code. Using them to identify your own product is what this policy restricts.
+
+## How should I use the marks?
+
+- Use the logo files as they are. Do not change their shapes, colors or proportions, or combine them with your own name or logo.
+- Use the name to refer to Typomend itself, not as a generic word for autocorrect software.
+- When you mention Typomend in connection with your own product, make it clear that the two are separate, for example: "YourApp is based on Typomend, but is not affiliated with or endorsed by the Typomend project."
 
 ## What does a modified version need to change?
 
@@ -49,11 +58,10 @@ Also changing the window class in `crates/typomend/src/app.rs`, the settings fol
 
 A build of unmodified source, or an official release packaged for a package manager such as winget or Scoop, may keep the Typomend name and logo, **as long as it does not present itself as an official release**. Say who built or packaged it.
 
-## What does this policy not do?
+## What does this policy not cover?
 
-- **It adds no condition to MPL 2.0.** Everything the license lets you do with the code, including selling a competing product, stays allowed under a name and logo of your own.
-- It does not limit uses that the law allows without permission, such as naming Typomend to describe your product truthfully.
-- It does not make the attribution suggested in [NOTICE.md](NOTICE.md) mandatory.
+- Uses that the law allows without permission, such as naming Typomend to describe your product truthfully.
+- The attribution suggested in the [readme](README.md#how-should-i-credit-typomend), which stays a request, not a requirement.
 
 ## How do I ask for permission?
 

@@ -195,7 +195,20 @@ https://github.com/boylin0/typomend
 Licensed under MPL 2.0
 ```
 
-[NOTICE.md](NOTICE.md) has an About page template, a Traditional Chinese version of these lines, and the third-party components that keep their own licenses.
+MPL 2.0 does require that recipients of an executable are told where to get the source code of its MPL-covered files. An About page can do both:
+
+```text
+YourApp 1.2.0
+Copyright 2027 Your Name
+Source code: https://example.com/yourapp
+
+Based on Typomend
+Originally developed by boylin0
+https://github.com/boylin0/typomend
+Licensed under MPL 2.0
+```
+
+Typomend's own About tab is filled in from the `about-*` messages in `crates/typomend/i18n/<language>/typomend.ftl`. [NOTICE.md](NOTICE.md) records the project's origin and its third-party components; keeping it in your copy keeps that record with the code.
 
 ### Can I use the Typomend name and logo?
 

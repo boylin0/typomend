@@ -9,6 +9,11 @@ All notable changes to this project are documented in this file. The format is b
 - The release archive holds `THIRD-PARTY-NOTICES.txt`, with the license of every third-party crate built into `typomend.exe` and the notices of the Unihan and OpenCC data, as their MIT, Apache-2.0 and Unicode licenses ask. `cargo xtask notices` generates it with cargo-about, and CI checks that it can on every push.
 - The full Unicode License v3 and Apache License 2.0 texts of the Unihan and OpenCC data sit next to that data, in `crates/typomend-scorer/data/LICENSE-UNICODE` and `LICENSE-OPENCC`.
 
+### Changed
+
+- `NOTICE.md` is a short notice in the usual form: the copyright line, the original author, the license and the third-party data with its copyright holders. The suggested "Based on Typomend" lines and the About page template moved to the readme.
+- `TRADEMARKS.md` states who holds the marks, allows add-ons named "for Typomend", asks before a package name uses Typomend, and says how to use the logo and how to state that a product is not affiliated with Typomend.
+
 ## [0.0.2] - 2026-10-12
 
 ### Added
