@@ -4,6 +4,8 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+## [0.0.2] - 2026-10-12
+
 ### Added
 
 - `NOTICE.md` records the project's origin, original author, copyright and license, suggests how a product built from Typomend can credit it on its About page, and lists the third-party components that keep their own licenses: the Rust crates, the Unihan and OpenCC data, and the downloadable models.
@@ -12,10 +14,8 @@ All notable changes to this project are documented in this file. The format is b
 
 ### Changed
 
+- Releases ship as a zip archive named for the version and the platform it runs on, `typomend-0.0.2-x86_64-pc-windows-msvc.zip` for 64-bit Windows on an Intel or AMD processor, with the license, `NOTICE.md`, `TRADEMARKS.md` and the readmes next to `typomend.exe`. The SHA-256 checksum is now of the archive, in `typomend-0.0.2-x86_64-pc-windows-msvc.zip.sha256`.
 - Every source file starts with a copyright line and an `SPDX-License-Identifier: MPL-2.0` tag above the MPL-2.0 notice, and `cargo xtask headers` checks for all three. `cargo xtask headers --fix` adds the new lines to files that carry only the notice.
-- The release archive also holds `NOTICE.md` and `TRADEMARKS.md`.
-
-- Releases ship as a zip archive named for the version and the platform it runs on, `typomend-<version>-x86_64-pc-windows-msvc.zip` for 64-bit Windows on an Intel or AMD processor, with the license and the readme next to `typomend.exe`. The SHA-256 checksum is now of the archive, in `typomend-<version>-x86_64-pc-windows-msvc.zip.sha256`.
 
 ## [0.0.1] - 2026-10-11
 
@@ -48,5 +48,6 @@ First public release.
 - Each release publishes a SHA-256 checksum, `typomend.exe.sha256`, next to `typomend.exe`.
 - Licensed under MPL-2.0, with the license notice in every source file and a link to the license on the About tab.
 
-[Unreleased]: https://github.com/boylin0/typomend/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/boylin0/typomend/compare/v0.0.2...HEAD
+[0.0.2]: https://github.com/boylin0/typomend/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/boylin0/typomend/releases/tag/v0.0.1

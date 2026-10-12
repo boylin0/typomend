@@ -2834,7 +2834,7 @@ checksum = "b6f5e870be6c3b371b77fe0ee0bafb859fa4964b4404c27de1d380043c4dda20"
 
 [[package]]
 name = "typomend"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow",
  "dirs",
@@ -2858,14 +2858,14 @@ dependencies = [
 
 [[package]]
 name = "typomend-engine"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "aho-corasick",
 ]
 
 [[package]]
 name = "typomend-observer"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "parking_lot",
  "serde",
@@ -2878,7 +2878,7 @@ dependencies = [
 
 [[package]]
 name = "typomend-scorer"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "anyhow",
  "candle-core",
